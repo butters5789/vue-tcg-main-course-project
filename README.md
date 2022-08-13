@@ -1,1 +1,5 @@
-# vue-tcg-main-course-project
+# Vue - The Complete Guide
+
+## Vue Main Course Project
+
+### Main Project
