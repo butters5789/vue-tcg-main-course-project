@@ -9,9 +9,15 @@
     </div>
 
     <ul v-if="hasCoaches">
-      <li v-for="coach in filteredCoaches" :key="coach.id">
-        {{ `${coach.firstName} ${coach.lastName}` }}
-      </li>
+      <coach-item
+        v-for="coach in filteredCoaches"
+        :key="coach.id"
+        :id="coach.id"
+        :first-name="coach.firstName"
+        :last-name="coach.lastName"
+        :rate="coach.hourlyRate"
+        :areas="coach.areas"
+      ></coach-item>
     </ul>
 
     <p v-else>
@@ -23,15 +29,30 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import CoachItem from '../../components/CoachItem.vue';
 
 export default {
   computed: {
     ...mapGetters('coaches', ['coaches', 'hasCoaches']),
     filteredCoaches() {
       return this.coaches;
-    }
+    },
+  },
+  components: {
+    CoachItem,
   },
 };
 </script>
 
-<style></style>
+<style scoped>
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+}
+</style>
