@@ -2,33 +2,39 @@
   <section>FILTER</section>
 
   <section>
-    <div class="controls">
-      <button>Refresh</button>
+    <base-card>
+      <div class="controls">
+        <base-button mode="outline">Refresh</base-button>
 
-      <router-link to="/register">Register as a Coach</router-link>
-    </div>
+        <base-button route to="/register">
+          Register as a Coach
+        </base-button>
+      </div>
 
-    <ul v-if="hasCoaches">
-      <coach-item
-        v-for="coach in filteredCoaches"
-        :key="coach.id"
-        :id="coach.id"
-        :first-name="coach.firstName"
-        :last-name="coach.lastName"
-        :rate="coach.hourlyRate"
-        :areas="coach.areas"
-      ></coach-item>
-    </ul>
+      <ul v-if="hasCoaches">
+        <coach-item
+          v-for="coach in filteredCoaches"
+          :key="coach.id"
+          :id="coach.id"
+          :first-name="coach.firstName"
+          :last-name="coach.lastName"
+          :rate="coach.hourlyRate"
+          :areas="coach.areas"
+        ></coach-item>
+      </ul>
 
-    <p v-else>
-      No coaches found. Register
-      <router-link to="/register">NOW</router-link> to be a coach!
-    </p>
+      <p v-else>
+        No coaches found. Register
+        <router-link to="/register">NOW</router-link> to be a coach!
+      </p>
+    </base-card>
   </section>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+import BaseButton from '../../components/ui/BaseButton.vue';
+import BaseCard from '../../components/ui/BaseCard.vue';
 import CoachItem from '../../components/CoachItem.vue';
 
 export default {
@@ -39,6 +45,8 @@ export default {
     },
   },
   components: {
+    BaseButton,
+    BaseCard,
     CoachItem,
   },
 };
