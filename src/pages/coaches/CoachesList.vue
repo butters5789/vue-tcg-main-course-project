@@ -1,14 +1,14 @@
 <template>
-  <section>FILTER</section>
+  <section>
+    <coach-filter @change-filter="setFilters"></coach-filter>
+  </section>
 
   <section>
     <base-card>
       <div class="controls">
         <base-button mode="outline">Refresh</base-button>
 
-        <base-button route to="/register">
-          Register as a Coach
-        </base-button>
+        <base-button route to="/register"> Register as a Coach </base-button>
       </div>
 
       <ul v-if="hasCoaches">
@@ -35,18 +35,48 @@
 import { mapGetters } from 'vuex';
 import BaseButton from '../../components/ui/BaseButton.vue';
 import BaseCard from '../../components/ui/BaseCard.vue';
+import CoachFilter from '../../components/CoachFilter.vue';
 import CoachItem from '../../components/CoachItem.vue';
 
 export default {
+  data() {
+    return {
+      areasFilter: {
+        frontend: true,
+        backend: true,
+        career: true,
+      },
+    };
+  },
   computed: {
     ...mapGetters('coaches', ['coaches', 'hasCoaches']),
     filteredCoaches() {
-      return this.coaches;
+      return this.coaches.filter((coach) => {
+        if (this.areasFilter.frontend && coach.areas.includes('frontend')) {
+          return true;
+        }
+
+        if (this.areasFilter.backend && coach.areas.includes('backend')) {
+          return true;
+        }
+
+        if (this.areasFilter.career && coach.areas.includes('career')) {
+          return true;
+        }
+
+        return false;
+      });
+    },
+  },
+  methods: {
+    setFilters(filters) {
+      this.areasFilter = filters;
     },
   },
   components: {
     BaseButton,
     BaseCard,
+    CoachFilter,
     CoachItem,
   },
 };
