@@ -14,9 +14,10 @@
     </div>
 
     <div class="actions">
-      <base-button route mode="outline" :to="coachContactLink"
-        >Contact</base-button
-      >
+      <base-button route mode="outline" :to="coachContactLink">
+        Contact
+      </base-button>
+
       <base-button route :to="coachDetailsLink">View Details</base-button>
     </div>
   </li>
