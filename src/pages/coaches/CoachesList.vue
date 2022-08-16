@@ -8,7 +8,9 @@
       <div class="controls">
         <base-button mode="outline">Refresh</base-button>
 
-        <base-button route to="/register"> Register as a Coach </base-button>
+        <base-button v-if="!isCoach" route to="/register">
+          Register as a Coach
+        </base-button>
       </div>
 
       <ul v-if="hasCoaches">
@@ -49,7 +51,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('coaches', ['coaches', 'hasCoaches']),
+    ...mapGetters('coaches', ['coaches', 'hasCoaches', 'isCoach']),
     filteredCoaches() {
       return this.coaches.filter((coach) => {
         if (this.areasFilter.frontend && coach.areas.includes('frontend')) {

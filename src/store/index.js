@@ -9,7 +9,9 @@ import mutations from './mutations';
 
 const store = createStore({
   state() {
-
+    return {
+      userId: 'c3',
+    };
   },
   getters,
   actions,
@@ -17,7 +19,7 @@ const store = createStore({
   modules: {
     coaches,
     requests,
-  }
+  },
 });
 
 export default store;
