@@ -20,12 +20,18 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import RequestItem from '../../components/RequestItem.vue';
 
 export default {
   computed: {
     ...mapGetters('requests', ['requests', 'hasRequests']),
+  },
+  methods: {
+    ...mapActions('requests', ['getCoachRequests']),
+  },
+  created() {
+    this.getCoachRequests();
   },
   components: {
     RequestItem,

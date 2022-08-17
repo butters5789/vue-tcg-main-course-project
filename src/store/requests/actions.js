@@ -1,12 +1,56 @@
 export default {
-  contactCoach({ commit }, { coachId, email, message }) {
+  async contactCoach({ commit }, { coachId, email, message }) {
     const newRequest = {
-      id: new Date().toISOString(),
-      coachId,
       email,
       message,
     };
 
+    const response = await fetch(
+      `https://vue-tcg-main-course-project-default-rtdb.firebaseio.com/requests/${coachId}.json`,
+      {
+        method: 'POST',
+        body: JSON.stringify(newRequest),
+      }
+    );
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      const error = new Error(responseData.message || 'Failed to fetch!');
+      throw error;
+    }
+
+    newRequest.id = responseData.name;
+    newRequest.coachId = coachId;
+
     commit('addRequest', newRequest);
+  },
+  async getCoachRequests({ commit, rootGetters }) {
+    const coachId = rootGetters.userId;
+    const requests = [];
+
+    const response = await fetch(
+      `https://vue-tcg-main-course-project-default-rtdb.firebaseio.com/requests/${coachId}.json`
+    );
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      const error = new Error(responseData.message || 'Failed to fetch!');
+      throw error;
+    }
+
+    for (const key in responseData) {
+      const request = {
+        id: key,
+        coachId,
+        email: responseData[key].email,
+        message: responseData[key].message,
+      };
+
+      requests.push(request);
+    }
+
+    commit('setRequests', requests);
   },
 };

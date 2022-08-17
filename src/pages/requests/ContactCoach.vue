@@ -54,7 +54,7 @@ export default {
       }
 
       this.contactCoach({
-        id: this.$route.params.id,
+        coachId: this.$route.params.id,
         email: this.email.value,
         message: this.message.value,
       });
