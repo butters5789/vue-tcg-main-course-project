@@ -8,4 +8,7 @@ export default {
   setIsLoading(state, payload) {
     state.isLoading = payload;
   },
+  setLastDataFetch(state) {
+    state.lastFetch = new Date().getTime();
+  },
 };

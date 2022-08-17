@@ -28,7 +28,11 @@ export default {
       ...responseData,
     });
   },
-  async getAllCoaches({ commit }) {
+  async getAllCoaches({ commit, getters }, payload) {
+    if (!payload.forceUpdate && !getters.shouldUpdate) {
+      return;
+    }
+
     const coaches = [];
 
     commit('setIsLoading', true);
@@ -59,5 +63,6 @@ export default {
 
     commit('setCoaches', coaches);
     commit('setIsLoading', false);
+    commit('setLastDataFetch');
   },
 };
