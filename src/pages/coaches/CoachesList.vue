@@ -1,4 +1,8 @@
 <template>
+  <base-dialog :show="!!error" title="An error occurred!" @close="handelError">
+    <p>{{ error }}</p>
+  </base-dialog>
+
   <section>
     <coach-filter @change-filter="setFilters"></coach-filter>
   </section>
@@ -6,7 +10,7 @@
   <section>
     <base-card>
       <div class="controls">
-        <base-button mode="outline" @click="getAllCoaches">Refresh</base-button>
+        <base-button mode="outline" @click="loadCoaches">Refresh</base-button>
 
         <base-button v-if="!isLoading && !isCoach" route to="/register">
           Register as a Coach
@@ -52,6 +56,7 @@ export default {
         backend: true,
         career: true,
       },
+      error: null,
     };
   },
   computed: {
@@ -75,12 +80,22 @@ export default {
     },
   },
   created() {
-    this.getAllCoaches();
+    this.loadCoaches();
   },
   methods: {
     ...mapActions('coaches', ['getAllCoaches']),
     setFilters(filters) {
       this.areasFilter = filters;
+    },
+    async loadCoaches() {
+      try {
+        await this.getAllCoaches();
+      } catch (error) {
+        this.error = error || 'Something went wrong!';
+      }
+    },
+    handelError() {
+      this.error = null;
     },
   },
   components: {

@@ -40,7 +40,8 @@ export default {
     const responseData = await response.json();
 
     if (!response.ok) {
-      // throw error
+      const error = new Error(responseData.message || 'Failed to fetch!');
+      throw error;
     }
 
     for (const key in responseData) {
