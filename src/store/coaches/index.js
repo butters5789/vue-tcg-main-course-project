@@ -25,6 +25,7 @@ export default {
           hourlyRate: 30,
         },
       ],
+      isLoading: false,
     };
   },
   getters,

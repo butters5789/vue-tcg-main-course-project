@@ -6,14 +6,18 @@
   <section>
     <base-card>
       <div class="controls">
-        <base-button mode="outline">Refresh</base-button>
+        <base-button mode="outline" @click="getAllCoaches">Refresh</base-button>
 
-        <base-button v-if="!isCoach" route to="/register">
+        <base-button v-if="!isLoading && !isCoach" route to="/register">
           Register as a Coach
         </base-button>
       </div>
 
-      <ul v-if="hasCoaches">
+      <div v-if="isLoading">
+        <base-spinner></base-spinner>
+      </div>
+
+      <ul v-else-if="hasCoaches">
         <coach-item
           v-for="coach in filteredCoaches"
           :key="coach.id"
@@ -34,7 +38,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import BaseButton from '../../components/ui/BaseButton.vue';
 import BaseCard from '../../components/ui/BaseCard.vue';
 import CoachFilter from '../../components/CoachFilter.vue';
@@ -51,7 +55,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('coaches', ['coaches', 'hasCoaches', 'isCoach']),
+    ...mapGetters('coaches', ['coaches', 'hasCoaches', 'isCoach', 'isLoading']),
     filteredCoaches() {
       return this.coaches.filter((coach) => {
         if (this.areasFilter.frontend && coach.areas.includes('frontend')) {
@@ -70,7 +74,11 @@ export default {
       });
     },
   },
+  created() {
+    this.getAllCoaches();
+  },
   methods: {
+    ...mapActions('coaches', ['getAllCoaches']),
     setFilters(filters) {
       this.areasFilter = filters;
     },

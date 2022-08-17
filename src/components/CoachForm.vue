@@ -174,12 +174,11 @@ export default {
       const formData = {
         first: this.firstName.value,
         last: this.lastName.value,
-        desc: this.description.value,
+        description: this.description.value,
         rate: this.rate.value,
         areas: this.areas.value,
       };
 
-      console.log(formData);
       this.$emit('save-data', formData);
     },
   },

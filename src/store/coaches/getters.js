@@ -3,7 +3,7 @@ export default {
     return state.coaches;
   },
   hasCoaches(state) {
-    return state.coaches && state.coaches.length > 0;
+    return !state.isLoading && state.coaches && state.coaches.length > 0;
   },
   isCoach(state, getters, rootState, rootGetters) {
     const coaches = getters.coaches;
@@ -12,5 +12,8 @@ export default {
     return coaches.some((coach) => {
       return coach.id === userId;
     });
-  }
+  },
+  isLoading(state) {
+    return state.isLoading;
+  },
 };
