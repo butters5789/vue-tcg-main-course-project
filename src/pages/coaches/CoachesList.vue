@@ -1,44 +1,52 @@
 <template>
-  <base-dialog :show="!!error" title="An error occurred!" @close="handelError">
-    <p>{{ error }}</p>
-  </base-dialog>
+  <div>
+    <base-dialog
+      :show="!!error"
+      title="An error occurred!"
+      @close="handelError"
+    >
+      <p>{{ error }}</p>
+    </base-dialog>
 
-  <section>
-    <coach-filter @change-filter="setFilters"></coach-filter>
-  </section>
+    <section>
+      <coach-filter @change-filter="setFilters"></coach-filter>
+    </section>
 
-  <section>
-    <base-card>
-      <div class="controls">
-        <base-button mode="outline" @click="loadCoaches(true)">Refresh</base-button>
+    <section>
+      <base-card>
+        <div class="controls">
+          <base-button mode="outline" @click="loadCoaches(true)"
+            >Refresh</base-button
+          >
 
-        <base-button v-if="!isLoading && !isCoach" route to="/register">
-          Register as a Coach
-        </base-button>
-      </div>
+          <base-button v-if="!isLoading && !isCoach" route to="/register">
+            Register as a Coach
+          </base-button>
+        </div>
 
-      <div v-if="isLoading">
-        <base-spinner></base-spinner>
-      </div>
+        <div v-if="isLoading">
+          <base-spinner></base-spinner>
+        </div>
 
-      <ul v-else-if="hasCoaches">
-        <coach-item
-          v-for="coach in filteredCoaches"
-          :key="coach.id"
-          :id="coach.id"
-          :first-name="coach.firstName"
-          :last-name="coach.lastName"
-          :rate="coach.hourlyRate"
-          :areas="coach.areas"
-        ></coach-item>
-      </ul>
+        <ul v-else-if="hasCoaches">
+          <coach-item
+            v-for="coach in filteredCoaches"
+            :key="coach.id"
+            :id="coach.id"
+            :first-name="coach.firstName"
+            :last-name="coach.lastName"
+            :rate="coach.hourlyRate"
+            :areas="coach.areas"
+          ></coach-item>
+        </ul>
 
-      <p v-else>
-        No coaches found. Register
-        <router-link to="/register">NOW</router-link> to be a coach!
-      </p>
-    </base-card>
-  </section>
+        <p v-else>
+          No coaches found. Register
+          <router-link to="/register">NOW</router-link> to be a coach!
+        </p>
+      </base-card>
+    </section>
+  </div>
 </template>
 
 <script>
