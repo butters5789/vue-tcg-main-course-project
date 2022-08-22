@@ -10,7 +10,9 @@ import mutations from './mutations';
 const store = createStore({
   state() {
     return {
-      userId: 'c3',
+      userId: null,
+      token: null,
+      tokenExpiration: null,
     };
   },
   getters,
