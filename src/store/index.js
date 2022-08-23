@@ -12,7 +12,7 @@ const store = createStore({
     return {
       userId: null,
       token: null,
-      tokenExpiration: null,
+      didAutoLogout: false,
     };
   },
   getters,
