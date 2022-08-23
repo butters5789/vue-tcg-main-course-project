@@ -22,9 +22,9 @@
           <base-button
             v-if="!isAuthenticated"
             route
-            to="/auth"
+            to="/auth?redirect=register"
           >
-            Login
+            Login to Register as a Coach
           </base-button>
 
           <base-button

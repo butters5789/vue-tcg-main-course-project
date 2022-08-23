@@ -101,6 +101,10 @@ export default {
         } else {
           await this.signup(authPayload);
         }
+
+        const redirectUrl = `/${(this.$route.query.redirect || 'coaches')}`;
+
+        this.$router.replace(redirectUrl);
       } catch (error) {
         this.error = error.message || 'some default error message';
       }

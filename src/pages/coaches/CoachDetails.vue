@@ -12,7 +12,9 @@
         <header>
           <h2>Interested? Reach out now!</h2>
 
-          <base-button route :to="contactLink">Contact</base-button>
+          <base-button route :to="contactLink" v-if="showContactButton">
+            Contact
+          </base-button>
         </header>
 
         <router-view></router-view>
@@ -65,6 +67,9 @@ export default {
     },
     rate() {
       return this.coach.hourlyRate;
+    },
+    showContactButton() {
+      return !this.$route.path.includes('/contact');
     },
   },
   created() {

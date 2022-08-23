@@ -9,7 +9,7 @@
         <li><router-link to="/coaches">All Coaches</router-link></li>
         <li v-if="isAuthenticated"><router-link to="/requests">Requests</router-link></li>
         <li v-else><router-link to="/auth">Login</router-link></li>
-        <li v-if="isAuthenticated"><base-button @click="logout">Logout</base-button></li>
+        <li v-if="isAuthenticated"><base-button @click="logoutUser">Logout</base-button></li>
       </ul>
     </nav>
   </header>
@@ -24,6 +24,10 @@ export default {
   },
   methods: {
     ...mapActions(['logout']),
+    logoutUser() {
+      this.logout();
+      this.$router.replace('/coaches');
+    }
   }
 };
 </script>
