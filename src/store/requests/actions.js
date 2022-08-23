@@ -16,7 +16,7 @@ export default {
     const responseData = await response.json();
 
     if (!response.ok) {
-      const error = new Error(responseData.message || 'Failed to fetch!');
+      const error = new Error(responseData.error.message || 'Failed to fetch!');
       throw error;
     }
 
@@ -28,15 +28,18 @@ export default {
   async getCoachRequests({ commit, rootGetters }) {
     const coachId = rootGetters.userId;
     const requests = [];
+    const token = rootGetters.token;
 
     const response = await fetch(
-      `https://vue-tcg-main-course-project-default-rtdb.firebaseio.com/requests/${coachId}.json`
+      `https://vue-tcg-main-course-project-default-rtdb.firebaseio.com/requests/${coachId}.json?auth=${token}`
     );
+
+    console.log(response)
 
     const responseData = await response.json();
 
     if (!response.ok) {
-      const error = new Error(responseData.message || 'Failed to fetch!');
+      const error = new Error(responseData.error.message || 'Failed to fetch!');
       throw error;
     }
 

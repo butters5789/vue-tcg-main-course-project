@@ -29,9 +29,16 @@ export default {
   },
   methods: {
     ...mapActions('requests', ['getCoachRequests']),
+    async loadRequests() {
+      try {
+        await this.getCoachRequests();
+      } catch (error) {
+        console.error(error);
+      }
+    },
   },
   created() {
-    this.getCoachRequests();
+    this.loadRequests();
   },
   components: {
     RequestItem,

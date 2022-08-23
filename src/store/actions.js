@@ -39,4 +39,11 @@ export default {
       tokenExpiration: responseData.expiresIn,
     });
   },
+  logout({ commit }) {
+    commit('setUser', {
+      token: null,
+      userId: null,
+      tokenExpiration: null,
+    });
+  },
 };

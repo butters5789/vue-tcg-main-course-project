@@ -8,9 +8,10 @@ export default {
       description: payload.description,
       hourlyRate: payload.rate,
     };
+    const token = rootGetters.token;
 
     const response = await fetch(
-      `https://vue-tcg-main-course-project-default-rtdb.firebaseio.com/coaches/${userId}/.json`,
+      `https://vue-tcg-main-course-project-default-rtdb.firebaseio.com/coaches/${userId}/.json?auth=${token}`,
       {
         method: 'PUT',
         body: JSON.stringify(newCoach),
