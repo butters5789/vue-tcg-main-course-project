@@ -34,8 +34,6 @@ export default {
       `https://vue-tcg-main-course-project-default-rtdb.firebaseio.com/requests/${coachId}.json?auth=${token}`
     );
 
-    console.log(response)
-
     const responseData = await response.json();
 
     if (!response.ok) {

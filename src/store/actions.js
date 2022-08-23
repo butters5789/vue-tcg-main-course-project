@@ -1,12 +1,12 @@
 export default {
   async login({ dispatch }, payload) {
-    await dispatch('authPost', {
+    return dispatch('authPost', {
       url: 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=',
       payload,
     });
   },
   async signup({ dispatch }, payload) {
-    await dispatch('authPost', {
+    return dispatch('authPost', {
       url: 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=',
       payload,
     });
@@ -33,6 +33,9 @@ export default {
       throw error;
     }
 
+    localStorage.setItem('token', responseData.idToken);
+    localStorage.setItem('userId', responseData.localId);
+
     commit('setUser', {
       token: responseData.idToken,
       userId: responseData.localId,
@@ -46,4 +49,16 @@ export default {
       tokenExpiration: null,
     });
   },
+  autoLogin({ commit }) {
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
+
+    if (token && userId) {
+      commit('setUser', {
+        token,
+        userId,
+        tokenExpiration: null,
+      });
+    }
+  }
 };
